@@ -148,3 +148,28 @@ class CommunityInvitationExpireNotificationBuilder(
         CommunityMembersRecipient(key="request.created_by", roles=["owner", "manager"]),
         UserRecipient(key="request.receiver"),
     ]
+
+
+class CommunityEmailInvitationNotificationBuilder(
+    CommunityInvitationNotificationBuilder
+):
+    """Notification builder for community invitation via email submit action."""
+
+    type = "community-email-invitation.submit"
+
+    @classmethod
+    def build(cls, role, invitation_link, request, message=None):
+        """Build notification with request context."""
+        return Notification(
+            type=cls.type,
+            context={
+                "role": role,
+                'invitation_link': invitation_link,
+                "message": message,
+                "request": EntityResolverRegistry.reference_entity(request),
+            },
+        )
+
+    recipients = [
+        UserRecipient(key="request.receiver"),
+    ]

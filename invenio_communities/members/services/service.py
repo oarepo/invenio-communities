@@ -214,9 +214,10 @@ class MemberService(RecordService):
 
         # Add/invite members via the factory function.
         for m in members:
+            # OAREPO: support is included inside the factory function
             # TODO: Add support for inviting an email
-            if m["type"] == "email":
-                raise ValidationError(_("Invalid member type: email"))
+            # if m["type"] == "email":
+            #     raise ValidationError(_("Invalid member type: email"))
 
             factory(identity, community, role, visible, m, message, uow)
             # Run components
@@ -244,6 +245,11 @@ class MemberService(RecordService):
         request_id=None,
     ):
         """Add a member to the community."""
+
+        # TODO: Add support for inviting an email
+        if member["type"] == "email":
+            raise ValidationError(_("Invalid member type: email"))
+
         member_arg = {member["type"] + "_id": member["id"]}
         try:
             # Integrity checks happens here which will validate:
@@ -267,6 +273,12 @@ class MemberService(RecordService):
 
     def _invite_factory(self, identity, community, role, visible, member, message, uow):
         """Invite a member to the community."""
+
+        # OAREPO: support for invitation via email
+        if member["type"] == "email":
+            from ..email_invitations import invite_via_email
+            invite_via_email(identity, community, role, visible, member["id"], message, uow)
+
         if member["type"] == "group":
             # Groups cannot be invited, because groups have no one who can
             # accept an invitation.

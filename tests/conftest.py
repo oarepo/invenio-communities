@@ -35,13 +35,14 @@ from invenio_vocabularies.records.api import Vocabulary
 from marshmallow import fields
 
 from invenio_communities.communities.records.api import Community
+from invenio_communities.members.email_invitations import UserEmailResolver
 from invenio_communities.members.records.api import Member
 from invenio_communities.notifications.builders import (
     CommunityInvitationAcceptNotificationBuilder,
     CommunityInvitationCancelNotificationBuilder,
     CommunityInvitationDeclineNotificationBuilder,
     CommunityInvitationExpireNotificationBuilder,
-    CommunityInvitationSubmittedNotificationBuilder,
+    CommunityInvitationSubmittedNotificationBuilder, CommunityEmailInvitationNotificationBuilder,
 )
 from invenio_communities.proxies import current_communities
 
@@ -116,6 +117,9 @@ def app_config(app_config):
         EmailNotificationBackend.id: EmailNotificationBackend(),
     }
 
+    app_config["CELERY_TASK_ALWAYS_EAGER"] = True
+    app_config["CELERY_ALWAYS_EAGER"] = True
+
     # Specifying dummy builders to avoid raising errors for most tests. Extend as needed.
     app_config["NOTIFICATIONS_BUILDERS"] = {
         CommunityInvitationAcceptNotificationBuilder.type: CommunityInvitationAcceptNotificationBuilder,
@@ -123,6 +127,7 @@ def app_config(app_config):
         CommunityInvitationDeclineNotificationBuilder.type: CommunityInvitationDeclineNotificationBuilder,
         CommunityInvitationExpireNotificationBuilder.type: CommunityInvitationExpireNotificationBuilder,
         CommunityInvitationSubmittedNotificationBuilder.type: CommunityInvitationSubmittedNotificationBuilder,
+        CommunityEmailInvitationNotificationBuilder.type: CommunityEmailInvitationNotificationBuilder,
     }
 
     # Specifying default resolvers. Will only be used in specific test cases.
@@ -131,6 +136,7 @@ def app_config(app_config):
         ServiceResultResolver(service_id="communities", type_key="community"),
         ServiceResultResolver(service_id="requests", type_key="request"),
         ServiceResultResolver(service_id="request_events", type_key="request_event"),
+        UserEmailResolver(),
     ]
 
     # Extending preferences schemas, to include notification preferences. Should not matter for most test cases

@@ -124,3 +124,40 @@ class CommunityInvitation(RequestType):
             "manager",
         ]
     }
+
+
+import marshmallow as ma
+
+class CommunityEmailInvitation(RequestType):
+    """Community member invitation request type."""
+
+    type_id = "community-email-invitation"
+    name = _("Community email invitation")
+
+    payload_schema = dict(
+        role = ma.fields.String(required=True),
+        visible = ma.fields.String(required=True, validate=ma.validate.OneOf(["public", "restricted"]))
+    )
+
+    create_action = "create"
+    available_actions = {
+        "create": actions.CreateAndSubmitAction,
+        "delete": actions.DeleteAction,
+        "accept": actions.AcceptAction,
+        "decline": actions.DeclineAction,
+        "cancel": actions.CancelAction,
+        "expire": actions.ExpireAction,
+    }
+
+    creator_can_be_none = False
+    topic_can_be_none = False
+    allowed_creator_ref_types = ["community"]
+    allowed_receiver_ref_types = ["user_email"]
+    allowed_topic_ref_types = ["community"]
+
+    needs_context = {
+        "community_roles": [
+            "owner",
+            "manager",
+        ]
+    }

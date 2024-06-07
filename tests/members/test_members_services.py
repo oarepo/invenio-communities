@@ -243,15 +243,16 @@ def test_invite_group_denied(member_service, community, owner, group, db):
         community._record.id,
         data,
     )
+
     # Email invitations not yet implemented
-    data["members"][0]["type"] = "email"
-    assert pytest.raises(
-        ValidationError,
-        member_service.invite,
-        owner.identity,
-        community._record.id,
-        data,
-    )
+    # data["members"][0]["type"] = "email"
+    # assert pytest.raises(
+    #     ValidationError,
+    #     member_service.invite,
+    #     owner.identity,
+    #     community._record.id,
+    #     data,
+    # )
 
 
 def test_invite_already_member(member_service, community, owner, new_user, db):
