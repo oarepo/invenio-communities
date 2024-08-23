@@ -134,6 +134,10 @@ def create_ui_blueprint(app):
         static_folder="../static",
     )
 
+    if not app.config.get("COMMUNITIES_REGISTER_UI_BLUEPRINT", True):
+        # three-state logic to allow overriding both from invenio.cfg and libraries
+        return blueprint
+
     # Communities URL rules
     blueprint.add_url_rule(
         routes["frontpage"],
