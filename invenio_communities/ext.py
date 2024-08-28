@@ -128,6 +128,9 @@ def finalize_app(app):
 
 def register_menus(app):
     """Register community menu items."""
+    if not app.config.get("COMMUNITIES_REGISTER_UI_BLUEPRINT", True):
+        # three-state logic to allow overriding both from invenio.cfg and libraries
+        return
     current_menu.submenu("main.communities").register(
         endpoint="invenio_communities.communities_frontpage",
         text=_("Communities"),
@@ -147,14 +150,14 @@ def register_menus(app):
         text=_("Requests"),
         order=20,
         expected_args=["pid_value"],
-        **{"icon": "inbox", "permissions": "can_search_requests"}
+        **{"icon": "inbox", "permissions": "can_search_requests"},
     )
     communities.submenu("members").register(
         endpoint="invenio_communities.members",
         text=_("Members"),
         order=30,
         expected_args=["pid_value"],
-        **{"icon": "users", "permissions": "can_members_search_public"}
+        **{"icon": "users", "permissions": "can_members_search_public"},
     )
 
     communities.submenu("settings").register(
@@ -162,7 +165,7 @@ def register_menus(app):
         text=_("Settings"),
         order=40,
         expected_args=["pid_value"],
-        **{"icon": "settings", "permissions": "can_update"}
+        **{"icon": "settings", "permissions": "can_update"},
     )
 
     communities.submenu("curation_policy").register(
@@ -171,7 +174,7 @@ def register_menus(app):
         order=50,
         visible_when=_has_curation_policy_page_content,
         expected_args=["pid_value"],
-        **{"icon": "balance scale", "permissions": "can_read"}
+        **{"icon": "balance scale", "permissions": "can_read"},
     )
     communities.submenu("about").register(
         endpoint="invenio_communities.communities_about",
@@ -179,7 +182,7 @@ def register_menus(app):
         order=60,
         visible_when=_has_about_page_content,
         expected_args=["pid_value"],
-        **{"icon": "info", "permissions": "can_read"}
+        **{"icon": "info", "permissions": "can_read"},
     )
 
 
