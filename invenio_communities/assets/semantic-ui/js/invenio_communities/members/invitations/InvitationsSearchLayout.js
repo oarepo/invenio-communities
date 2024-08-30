@@ -16,6 +16,8 @@ import { InvitationsMembersModalWithSearchKit } from "./invitationsModal/Invitat
 import { SearchBar, Sort } from "react-searchkit";
 import { FilterLabels } from "../components/FilterLabels";
 import { SearchFilters } from "@js/invenio_search_ui/components/SearchFilters";
+import Overridable from "react-overridable";
+
 
 export class InvitationsSearchLayout extends Component {
   render() {
@@ -34,11 +36,17 @@ export class InvitationsSearchLayout extends Component {
               <RequestStatusFilter keepFiltersOnUpdate />
               <div>
                 <InvitationsContextProvider community={community}>
-                  <InvitationsMembersModalWithSearchKit
+                  <Overridable id="InvenioCommunities.CommunityMembers.InvitationsModal"
+                  rolesCanInvite={rolesCanInvite}
+                  groupsEnabled={groupsEnabled}
+                  community={community}
+                  >    
+                    <InvitationsMembersModalWithSearchKit
                     rolesCanInvite={rolesCanInvite}
                     groupsEnabled={groupsEnabled}
                     community={community}
-                  />
+                    />
+                  </Overridable>
                 </InvitationsContextProvider>
               </div>
             </div>
@@ -51,11 +59,17 @@ export class InvitationsSearchLayout extends Component {
           <div className="flex align-items-center column-mobile">
             <div className="tablet only mr-5">
               <InvitationsContextProvider community={community}>
-                <InvitationsMembersModalWithSearchKit
+                <Overridable id="InvenioCommunities.CommunityMembers.InvitationsModal"
+                rolesCanInvite={rolesCanInvite}
+                groupsEnabled={groupsEnabled}
+                community={community}
+                >    
+                  <InvitationsMembersModalWithSearchKit
                   rolesCanInvite={rolesCanInvite}
                   groupsEnabled={groupsEnabled}
                   community={community}
-                />
+                  />
+                </Overridable>
               </InvitationsContextProvider>
             </div>
 
