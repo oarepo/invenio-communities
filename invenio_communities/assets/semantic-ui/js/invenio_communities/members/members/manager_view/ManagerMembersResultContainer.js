@@ -44,9 +44,10 @@ export const ManagerMembersResultsContainer = ({
                community={community}
               >    
                 <InvitationsMembersModalWithSearchKit
-                rolesCanInvite={rolesCanInvite}
-                groupsEnabled={groupsEnabled}
-                community={community}
+                  rolesCanInvite={rolesCanInvite}
+                  groupsEnabled={groupsEnabled}
+                  community={community}
+                  triggerButtonSize="tiny"
                 />
               </Overridable>
             </InvitationsContextProvider>

@@ -37,14 +37,14 @@ export class InvitationsSearchLayout extends Component {
               <div>
                 <InvitationsContextProvider community={community}>
                   <Overridable id="InvenioCommunities.CommunityMembers.InvitationsModal"
-                  rolesCanInvite={rolesCanInvite}
-                  groupsEnabled={groupsEnabled}
-                  community={community}
-                  >    
-                    <InvitationsMembersModalWithSearchKit
                     rolesCanInvite={rolesCanInvite}
                     groupsEnabled={groupsEnabled}
                     community={community}
+                  >    
+                    <InvitationsMembersModalWithSearchKit
+                      rolesCanInvite={rolesCanInvite}
+                      groupsEnabled={groupsEnabled}
+                      community={community}
                     />
                   </Overridable>
                 </InvitationsContextProvider>
@@ -60,14 +60,14 @@ export class InvitationsSearchLayout extends Component {
             <div className="tablet only mr-5">
               <InvitationsContextProvider community={community}>
                 <Overridable id="InvenioCommunities.CommunityMembers.InvitationsModal"
-                rolesCanInvite={rolesCanInvite}
-                groupsEnabled={groupsEnabled}
-                community={community}
-                >    
-                  <InvitationsMembersModalWithSearchKit
                   rolesCanInvite={rolesCanInvite}
                   groupsEnabled={groupsEnabled}
                   community={community}
+                >    
+                  <InvitationsMembersModalWithSearchKit
+                    rolesCanInvite={rolesCanInvite}
+                    groupsEnabled={groupsEnabled}
+                    community={community}
                   />
                 </Overridable>
               </InvitationsContextProvider>

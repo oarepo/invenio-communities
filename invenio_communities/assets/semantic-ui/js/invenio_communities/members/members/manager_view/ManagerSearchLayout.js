@@ -31,14 +31,14 @@ export class ManagerSearchLayout extends Component {
             <div className="mobile only rel-mb-1">
               <InvitationsContextProvider community={community}>
                 <Overridable id="InvenioCommunities.CommunityMembers.InvitationsModal"
-                rolesCanInvite={rolesCanInvite}
-                groupsEnabled={groupsEnabled}
-                community={community}
-                >    
-                  <InvitationsMembersModalWithSearchKit
                   rolesCanInvite={rolesCanInvite}
                   groupsEnabled={groupsEnabled}
                   community={community}
+                >    
+                  <InvitationsMembersModalWithSearchKit
+                    rolesCanInvite={rolesCanInvite}
+                    groupsEnabled={groupsEnabled}
+                    community={community}
                   />
                 </Overridable>
               </InvitationsContextProvider>
@@ -50,14 +50,14 @@ export class ManagerSearchLayout extends Component {
             <div className="tablet only">
               <InvitationsContextProvider community={community}>
                 <Overridable id="InvenioCommunities.CommunityMembers.InvitationsModal"
-                rolesCanInvite={rolesCanInvite}
-                groupsEnabled={groupsEnabled}
-                community={community}
-                >    
-                  <InvitationsMembersModalWithSearchKit
                   rolesCanInvite={rolesCanInvite}
                   groupsEnabled={groupsEnabled}
                   community={community}
+                >    
+                  <InvitationsMembersModalWithSearchKit
+                    rolesCanInvite={rolesCanInvite}
+                    groupsEnabled={groupsEnabled}
+                    community={community}
                   />
                 </Overridable>
               </InvitationsContextProvider>

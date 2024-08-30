@@ -30,9 +30,9 @@ class InvitationsEmptyResultsCmp extends Component {
                community={community}
               >    
                 <InvitationsMembersModalWithSearchKit
-                rolesCanInvite={rolesCanInvite}
-                groupsEnabled={groupsEnabled}
-                community={community}
+                  rolesCanInvite={rolesCanInvite}
+                  groupsEnabled={groupsEnabled}
+                  community={community}
                 />
               </Overridable>
             </InvitationsContextProvider>

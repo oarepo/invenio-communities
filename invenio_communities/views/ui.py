@@ -128,7 +128,7 @@ def create_ui_blueprint(app):
     routes = app.config.get("COMMUNITIES_ROUTES")
 
     blueprint = Blueprint(
-        "invenio_communities1",
+        "invenio_communities",
         __name__,
         template_folder="../templates",
         static_folder="../static",
