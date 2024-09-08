@@ -139,6 +139,41 @@ def create_ui_blueprint(app):
         static_folder="../static",
     )
 
+    # Register error handlers
+    blueprint.register_error_handler(PermissionDenied, record_permission_denied_error)
+    blueprint.register_error_handler(CommunityDeletedError, record_tombstone_error)
+    blueprint.register_error_handler(PIDDeletedError, record_tombstone_error)
+    blueprint.register_error_handler(PIDDoesNotExistError, not_found_error)
+
+    # Register context processor
+    blueprint.app_context_processor(search_app_context)
+
+    # Template filters
+    @blueprint.app_template_filter()
+    def invenio_format_datetime(value):
+        date = datetime.fromisoformat(value)
+        locale_value = current_app.config.get("BABEL_DEFAULT_LOCALE")
+        return format_datetime(date, locale=locale_value)
+
+    @blueprint.app_template_filter("resolve_community_logo")
+    def resolve_community_logo(logo_link, community_id):
+        """Returns placeholder image link if passed community doesn't have a logo."""
+        community_service = current_service_registry.get("communities")
+
+        try:
+            community_service.read_logo(
+                identity=g.identity,
+                id_=community_id,
+            )
+        except LogoNotFoundError:
+            return url_for("static", filename="images/square-placeholder.png")
+
+        return logo_link
+
+    if not app.config.get("COMMUNITIES_REGISTER_UI_BLUEPRINT", True):
+        # three-state logic to allow overriding both from invenio.cfg and libraries
+        return blueprint
+
     # Communities URL rules
     blueprint.add_url_rule(
         routes["frontpage"],
@@ -234,13 +269,14 @@ def create_ui_blueprint(app):
     )
 
     # Register error handlers
-    blueprint.register_error_handler(PermissionDenied, record_permission_denied_error)
-    blueprint.register_error_handler(CommunityDeletedError, record_tombstone_error)
-    blueprint.register_error_handler(PIDDeletedError, record_tombstone_error)
-    blueprint.register_error_handler(PIDDoesNotExistError, not_found_error)
+    # removed by oarepo
+    # blueprint.register_error_handler(PermissionDenied, record_permission_denied_error)
+    # blueprint.register_error_handler(CommunityDeletedError, record_tombstone_error)
+    # blueprint.register_error_handler(PIDDeletedError, record_tombstone_error)
+    # blueprint.register_error_handler(PIDDoesNotExistError, not_found_error)
 
-    # Register context processor
-    blueprint.app_context_processor(search_app_context)
+    # # Register context processor
+    # blueprint.app_context_processor(search_app_context)
 
     # Template filters
     @blueprint.app_template_filter()
