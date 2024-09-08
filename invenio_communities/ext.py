@@ -142,6 +142,9 @@ def finalize_app(app):
 
 def register_menus(app):
     """Register community menu items."""
+    if not app.config.get("COMMUNITIES_REGISTER_UI_BLUEPRINT", True):
+        # three-state logic to allow overriding both from invenio.cfg and libraries
+        return
     current_menu.submenu("main.communities").register(
         endpoint="invenio_communities.communities_frontpage",
         text=_("Communities"),
