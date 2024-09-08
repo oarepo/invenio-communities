@@ -14,6 +14,7 @@
   class="ui container fluid page-subheader-outer with-submenu rel-pt-2 ml-0-mobile mr-0-mobile">
   <div class="ui container relaxed grid page-subheader mr-0-mobile ml-0-mobile">
     <div class="row pb-0">
+      {%- block subheader_metadata %}
       <div
         class="sixteen wide mobile sixteen wide tablet thirteen wide computer column">
         <div
@@ -60,7 +61,7 @@
                   </a>
                 </div>
               {% endif %}
-
+              
               {% if community.metadata.type is defined %}
                 <div class="inline-computer mt-5 rel-mr-1">
                   <i class="tag icon" aria-hidden="true"></i>
@@ -104,6 +105,8 @@
           </div>
         </div>
       </div>
+      {%- endblock subheader_metadata %}
+      {%- block subheader_buttons %}
       <div
         class="sixteen wide mobile sixteen wide tablet three wide computer right aligned middle aligned column">
         {%- if not community_use_jinja_header %}
@@ -121,11 +124,11 @@
             {{ _("Manage community") }}
           </a>
         {% endif %}
-
       </div>
-
+      {%- endblock subheader_buttons %}
     </div>
     <div class="ui divider mobile only"></div>
+    {%- block subheader_menu %}
     <div
       class="ui container secondary pointing stackable menu page-subheader pl-0 pr-0 theme-primary">
       {% if community_menu_active %}
@@ -140,5 +143,6 @@
         {% endfor %}
       {% endif %}
     </div>
+    {%- endblock subheader_menu %}
   </div>
 </div>
