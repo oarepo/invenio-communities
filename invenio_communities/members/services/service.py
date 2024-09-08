@@ -218,8 +218,11 @@ class MemberService(RecordService):
         # Add/invite members via the factory function.
         for m in members:
             # TODO: Add support for inviting an email
-            if m["type"] == "email":
-                raise ValidationError(_("Invalid member type: email"))
+            # commented out by oarepo, we will provide a component, that will handle email member type
+            # better solution would be to move user factory to a component as well and check for unhandled
+            # types after all components have been called
+            # if m["type"] == "email":
+            #     raise ValidationError(_("Invalid member type: email"))
 
             extra = {}
             if m["type"] == "group":
@@ -244,6 +247,9 @@ class MemberService(RecordService):
                 record=m,
                 community=community,
                 errors=None,
+                role=role,
+                visible=visible,
+                message=message,
                 uow=uow,
             )
 
