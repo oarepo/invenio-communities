@@ -29,7 +29,7 @@ from ...permissions import CommunityPermissionPolicy
 from ..records import Member
 from ..records.api import ArchivedInvitation
 from . import facets
-from .components import CommunityMemberCachingComponent
+from .components import CommunityMemberCachingComponent, DefaultCommunityMemberComponents
 from .schemas import MemberEntitySchema
 
 
@@ -193,7 +193,6 @@ class MemberServiceConfig(RecordServiceConfig, ConfiguratorMixin):
     )
 
     # Service components
-    components = [
-        MetadataComponent,
-        CommunityMemberCachingComponent,
-    ]
+    components =FromConfig(
+        "COMMUNITIES_MEMBERS_SERVICE_COMPONENTS", default=DefaultCommunityMemberComponents
+    )
