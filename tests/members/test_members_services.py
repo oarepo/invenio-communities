@@ -162,19 +162,20 @@ def test_add_invalid_data(member_service, community, owner, group, db):
         ValidationError, member_service.add, owner.identity, community._record.id, data
     )
     # Cannot add email
-    data = {
-        "members": [{"type": "email", "id": "somebody@somewhere.org"}],
-        "role": "reader",
-    }
-    assert pytest.raises(
-        ValidationError,
-        # using system_identity because owner gets a permission denied before
-        # validation kicks in.
-        member_service.add,
-        system_identity,
-        community._record.id,
-        data,
-    )
+    # commented out by oarepo, we provide a component inside oarepo-oidc-einfra that allows email invitations
+    # data = {
+    #     "members": [{"type": "email", "id": "somebody@somewhere.org"}],
+    #     "role": "reader",
+    # }
+    # assert pytest.raises(
+    #     ValidationError,
+    #     # using system_identity because owner gets a permission denied before
+    #     # validation kicks in.
+    #     member_service.add,
+    #     system_identity,
+    #     community._record.id,
+    #     data,
+    # )
 
 
 #
@@ -234,14 +235,15 @@ def test_invite_group_denied(member_service, community, owner, group, db):
         data,
     )
     # Email invitations not yet implemented
-    data["members"][0]["type"] = "email"
-    assert pytest.raises(
-        ValidationError,
-        member_service.invite,
-        owner.identity,
-        community._record.id,
-        data,
-    )
+    # commented out by oarepo, we provide a component inside oarepo-oidc-einfra that allows email invitations
+    # data["members"][0]["type"] = "email"
+    # assert pytest.raises(
+    #     ValidationError,
+    #     member_service.invite,
+    #     owner.identity,
+    #     community._record.id,
+    #     data,
+    # )
 
 
 def test_invite_already_member(member_service, community, owner, new_user, db):
