@@ -12,7 +12,10 @@
 from flask_principal import Identity
 from invenio_accounts.models import Role
 from invenio_i18n import lazy_gettext as _
-from invenio_records_resources.services.records.components import ServiceComponent
+from invenio_records_resources.services.records.components import (
+    MetadataComponent,
+    ServiceComponent,
+)
 
 from invenio_communities.members.records.api import MemberMixin
 
@@ -81,3 +84,9 @@ class CommunityMemberCachingComponent(ServiceComponent):
     ):
         """On member update."""
         self._member_changed(record, community=community)
+
+
+DefaultCommunityMemberComponents = [
+    MetadataComponent,
+    CommunityMemberCachingComponent,
+]
