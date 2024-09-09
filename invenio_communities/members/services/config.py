@@ -16,7 +16,6 @@ from invenio_records_resources.services import (
     pagination_links,
 )
 from invenio_records_resources.services.base.config import ConfiguratorMixin, FromConfig
-from invenio_records_resources.services.records.components import MetadataComponent
 from invenio_records_resources.services.records.queryparser import (
     QueryParser,
     SearchFieldTransformer,
@@ -27,7 +26,7 @@ from ...permissions import CommunityPermissionPolicy
 from ..records import Member
 from ..records.api import ArchivedInvitation
 from . import facets
-from .components import CommunityMemberCachingComponent
+from .components import CommunityMemberCachingComponent, DefaultCommunityMemberComponents
 from .schemas import MemberEntitySchema
 
 
@@ -189,7 +188,6 @@ class MemberServiceConfig(RecordServiceConfig, ConfiguratorMixin):
     links_search = pagination_links("{+api}/communities/{community_id}/members{?args*}")
 
     # Service components
-    components = [
-        MetadataComponent,
-        CommunityMemberCachingComponent,
-    ]
+    components =FromConfig(
+        "COMMUNITIES_MEMBERS_SERVICE_COMPONENTS", default=DefaultCommunityMemberComponents
+    )
