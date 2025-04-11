@@ -26,7 +26,10 @@ from ...permissions import CommunityPermissionPolicy
 from ..records import Member
 from ..records.api import ArchivedInvitation
 from . import facets
-from .components import CommunityMemberCachingComponent, DefaultCommunityMemberComponents
+from .components import (
+    CommunityMemberCachingComponent,
+    DefaultCommunityMemberComponents,
+)
 from .schemas import MemberEntitySchema
 
 
@@ -188,6 +191,7 @@ class MemberServiceConfig(RecordServiceConfig, ConfiguratorMixin):
     links_search = pagination_links("{+api}/communities/{community_id}/members{?args*}")
 
     # Service components
-    components =FromConfig(
-        "COMMUNITIES_MEMBERS_SERVICE_COMPONENTS", default=DefaultCommunityMemberComponents
+    components = FromConfig(
+        "COMMUNITIES_MEMBERS_SERVICE_COMPONENTS",
+        default=DefaultCommunityMemberComponents,
     )

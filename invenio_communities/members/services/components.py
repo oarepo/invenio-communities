@@ -12,7 +12,10 @@
 from flask_principal import Identity
 from invenio_accounts.models import Role
 from invenio_i18n import lazy_gettext as _
-from invenio_records_resources.services.records.components import MetadataComponent, ServiceComponent
+from invenio_records_resources.services.records.components import (
+    MetadataComponent,
+    ServiceComponent,
+)
 
 from invenio_communities.members.records.api import MemberMixin
 
