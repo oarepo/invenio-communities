@@ -158,7 +158,11 @@ class CommunityService(RecordService):
     ):
         """Search for requests of a specific community."""
         self.require_permission(identity, "search_requests", community_id=community_id)
-
+        roles = [
+            n.role
+            for n in identity.provides
+            if n.method == "community" and n.value == community_id
+        ]
         # Prepare and execute the search
         params = params or {}
         search_result = current_requests_service._search(
@@ -170,7 +174,22 @@ class CommunityService(RecordService):
             extra_filter=dsl.Q(
                 "bool",
                 must=[
-                    dsl.Q("term", **{"receiver.community": community_id}),
+                    dsl.Q(
+                        "bool",
+                        should=[
+                            dsl.Q("term", **{"receiver.community": community_id}),
+                            *[
+                                dsl.Q(
+                                    "term",
+                                    **{
+                                        "grants": f"receiver.community.{community_id}.{role}"
+                                    },
+                                )
+                                for role in roles
+                            ],
+                        ],
+                        minimum_should_match=1,
+                    ),
                     ~dsl.Q("term", **{"status": "created"}),
                     # Exclude explicitly MembershipRequestRequestType.type_id .
                     # Requests of that type are returned in a dedicated search on
