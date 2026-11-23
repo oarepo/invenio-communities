@@ -49,7 +49,7 @@ communities = WebpackThemeBundle(
                 "axios": "^1.7.7",
                 "formik": "^2.1.0",
                 "i18next": "^20.3.0",
-                "@tinymce/tinymce-react": "^4.3.0",
+                "@hugerte/hugerte-react": "^2.0.2",
                 "i18next-browser-languagedetector": "^6.1.0",
                 "lodash": "^4.17.0",
                 "luxon": "^1.23.0",
@@ -65,7 +65,7 @@ communities = WebpackThemeBundle(
                 "redux-thunk": "^2.3.0",
                 "semantic-ui-css": "^2.4.0",
                 "semantic-ui-react": "^2.1.0",
-                "tinymce": "^6.7.2",
+                "hugerte": "^1.0.15",
                 "yup": "^0.32.11",
             },
             aliases={
